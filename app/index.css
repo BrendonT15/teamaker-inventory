@@ -1,0 +1,495 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+  }
+
+ .home {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+ }
+
+ .mask {
+    width: 100%;
+    height: 100%;
+ }
+
+ #header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    width: 100%;
+    height: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(180deg, #00794a, #005934);
+    background-color: #005934;
+    z-index: 100;
+    color: #fff;
+    box-shadow: 0 2rem 2rem 0 rgba(0, 0, 0, 0.2);
+ }
+
+ .nav_bar {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 2rem;
+  position: absolute;
+  left: 2rem;
+}
+
+ .hamburger {
+    display: inline-block;
+    cursor: pointer;
+ }
+
+ .side_bar h2 {
+    color: #fff;
+    text-align: center;
+ }
+
+ .side_bar p {
+    margin-top: auto;
+    color: #fff;
+    text-align: center;
+    font-size: 0.8rem;
+ }
+
+ .side_bar {
+    background-color: #005934;
+    width: 15%;
+    height: 100%;
+    padding: 4rem 3rem;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #00794a, #005934);
+    border-right: 1px solid #004326; /* A darker shade of green for contrast */
+    z-index: 120;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+ }
+
+ .side_bar.visible {
+    transform: translateX(0);
+ }
+
+ .side {
+    color: #fff;
+    cursor: pointer;
+    padding: 0.5rem;
+ }
+
+ .side:hover {
+    color: #ddd;
+ }
+
+  .x_icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #fff;
+    font-size: 2rem;
+  }
+
+  .locations {
+    margin-top: 0.4rem;
+    margin-left: 4rem;
+    flex-grow: 1;
+  }
+
+  .sidebar_content {
+    margin-top: 2rem;
+  }
+
+  #centered_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #top_container{
+   display: flex; 
+   align-items: center;
+   width: 80%;
+   height: 80px;
+   margin-top: 2.5rem;
+   padding: 1rem;
+ }
+
+ #function_container{
+   display: flex;
+   width: 50%;
+   gap: 1.5rem;
+   justify-content: flex-end;
+   margin-left: auto;
+ }
+
+  /* Fieldset Styling */
+  .filters {
+    border: 1px solid #ccc; /* Light border */
+    padding: 1rem; /* Spacing inside the fieldset */
+    border-radius: 4px; /* Slightly rounded corners */
+    margin-bottom: 1rem; /* Space below the fieldset */
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  /* Legend Styling */
+  .filters legend {
+    font-size: 1.2rem; /* Slightly larger font size */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark gray text color */
+    padding: 0 0.5rem; /* Space around the legend */
+  }
+
+  /* Container Div Styling */
+  .filters div {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 750px;
+    gap: 1rem; /* Space between checkboxes */
+  }
+
+  /* Checkbox and Label Styling */
+  .filters input[type="checkbox"] {
+    margin-right: 1rem; /* Space between checkbox and label */
+  }
+
+  .filters label {
+    font-size: 1rem; /* Regular font size */
+    color: #333; /* Dark gray text color */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+
+  /* Hover Effect */
+  .filters input[type="checkbox"]:hover + label {
+    color: #005934; /* Change label color on hover */
+  }
+
+  .search_bar {
+    display: flex;
+    width: 80%;
+    height: 3rem;
+    border: 1px solid #ccc; /* Light border around the search bar */
+    margin-left: 2rem;
+    border-radius: 10px; /* Rounded corners */
+    padding: 0 1rem; /* Padding inside the search bar */
+    font-size: 1rem; /* Font size for the text */
+    outline: none; /* Remove default outline */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  }
+  
+  .search_bar::placeholder {
+    color: #666; /* Subtle gray placeholder text */
+    opacity: 1; /* Ensure the placeholder is fully opaque */
+  }
+  
+  .search_bar:focus {
+    border-color: #005934; /* Green border on focus */
+    box-shadow: 0 0 5px rgba(0, 89, 52, 0.5); /* Slight green glow on focus */
+  }
+  
+  .search_bar:hover {
+    border-color: #005934; /* Green border on hover */
+  }
+
+  #inventory_container {
+    width: 80%;
+    height: 70%;
+    margin: 1rem auto 0 auto; /* Center the container horizontally */
+    padding: 1rem 2rem; /* Added consistent padding */
+    border: 1px solid #ccc; /* Light border for a clean look */
+    border-radius: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Ensure the container is scrollable if content overflows */
+  }
+
+ .inventory_banner {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem; /* Add padding below the banner */
+}
+ .left_banner,
+ .right_banner {
+  display: flex;
+  width: 50%;
+  align-items: center;
+}
+
+.left_banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
+  gap: 1rem; /* Space between columns */
+  padding: 0.5rem; /* Padding around the container */
+  background-color: #fff; /* White background for a clean look */
+}
+
+.left_banner span {
+  display: flex;
+  align-items: center; /* Center items vertically within their grid cell */
+  justify-content: center; /* Center items horizontally within their grid cell */
+  font-size: 1rem; /* Adjust font size as needed */
+  font-weight: bold; /* Bold text for headers */
+  color: #333; /* Dark gray text color */
+}
+
+/* Optional: Add styles for specific spans if needed */
+#item, #type, #Restock, #quantity {
+  text-align: center; /* Center text within each span */
+}
+
+.right_banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem; 
+  font-weight: bold; 
+  color: #333;
+  border: solid black 1px;
+}
+
+ .btn {
+  width: 10rem;
+  height: 3rem;
+  border: 1px solid #ccc; /* Light border for a clean look */
+  border-radius: 10px; /* Rounded corners for a soft appearance */
+  background-color: #f9f9f9; /* Light gray background */
+  color: #333; /* Dark gray text color */
+  font-size: 1rem; /* Standard font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  outline: none; /* Remove default outline */
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.btn:hover {
+  background-color: #e6e6e6; /* Slightly darker background on hover */
+  border-color: #005934; /* Green border on hover */
+}
+
+.btn:focus {
+  border-color: #005934; /* Green border on focus */
+  box-shadow: 0 0 5px rgba(0, 89, 52, 0.5); /* Subtle green glow on focus */
+}
+
+.btn:active {
+  background-color: #dcdcdc; /* Darker gray on click */
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Inset shadow to simulate button press */
+}
+
+.inventory_item {
+  display: flex;
+  justify-content: space-between; /* Space between left and right sections */
+  padding: 0.5rem 0; /* Reduced padding for a compact look */
+  border-bottom: 1px solid #ddd; /* Light bottom border */
+  background-color: #fff; /* White background for a clean appearance */
+}
+
+/* Left Inventory Section Styling */
+.left_inventory {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create three equal columns */
+  width: 50%; /* Half of the width */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  color: #666; /* Lighter text color for minimalism */
+}
+
+/* Align all spans in the left inventory section */
+.left_inventory span {
+  display: flex;
+  justify-content: center; /* Center text horizontally */
+  padding: 0.5rem 0; /* Vertical padding for spacing between rows */
+  text-align: center; /* Center text alignment */
+}
+
+/* Right Inventory Section Styling */
+.right_inventory {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between quantity and delete button */
+  color: #666; /* Lighter text color for minimalism */
+  border: solid black 1px;
+  padding: 0.5rem; /* Padding around the container */
+}
+
+/* Quantity Control Grid */
+.right_quantity {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Create three equal columns */
+  align-items: center; /* Center items vertically within the grid */
+  justify-items: center; /* Center items horizontally within each grid cell */
+  width: auto; /* Adjust width based on content */
+  height: auto; /* Adjust height to content */
+  margin: 0 auto; /* Center the grid within the parent container */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  color: #666; /* Lighter text color for minimalism */
+}
+
+/* Align and style the delete button */
+.delete_button {
+  margin-left: auto; /* Move delete button to the far right */
+  padding-left: 1rem; /* Add padding to separate it from the quantity grid */
+}
+
+/* Additional FontAwesome Icon Styling */
+.button {
+  width: 1.5rem; /* Slightly larger button size */
+  height: 1.5rem; /* Maintain aspect ratio */
+  font-size: 1.2rem; /* Moderate icon size */
+  cursor: pointer; /* Pointer cursor on hover */
+  color: #333; /* Dark gray color */
+  transition: color 0.3s ease; /* Smooth color transition */
+  text-align: center;
+}
+
+.remove_button:hover,
+.add_button:hover,
+.delete_button:hover {
+  color: #aaa; /* Uniform hover color for all buttons */
+}
+
+/* Quantity Input Styling */
+.quantity_input {
+  width: 2.5rem; /* Compact width */
+  height: 1.8rem; /* Compact height */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center; /* Center text */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  outline: none; /* Remove default outline */
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  appearance: textfield;
+  margin: 0 1.2rem;
+}
+
+.quantity_input::-webkit-inner-spin-button,
+.quantity_input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Remove default margins */
+}
+
+.quantity_input:focus {
+  border-color: #005934; /* Green border on focus */
+  box-shadow: 0 0 4px rgba(0, 89, 52, 0.5); /* Slight green glow on focus */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 150; /* Ensure it sits above other elements */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fff; /* White background for contrast */
+  border-radius: 10px; /* Rounded corners */
+  padding: 2rem;
+  max-width: 500px; /* Responsive width */
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  position: relative;
+  text-align: center; /* Center align text for a clean look */
+}
+
+/* Modal Header */
+.modal-content h2 {
+  margin-bottom: 1.5rem;
+  color: #005934; /* Same green theme */
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+/* Modal Form Labels */
+.modal-content label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1rem;
+  text-align: left; /* Left-align labels for clarity */
+}
+
+/* Modal Form Inputs */
+.modal-content input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Submit Button */
+.modal-content button[type="submit"] {
+  background-color: #005934; /* Green theme */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #007B4F; /* Slightly lighter green on hover */
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999; /* Grey color for the close button */
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #005934; /* Green theme on hover */
+}
+
+.restock {
+  font-size: 1.3rem;
+}
+
+.no_restock {
+  color: #4CAF50; /* Green color for no restock */
+}
+
+.maybe_restock {
+  color: #FFC107; /* Orange/Yellow color for maybe restock */
+}
+
+.yes_restock {
+  color: #F44336; /* Red color for yes restock */
+}
