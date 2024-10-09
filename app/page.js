@@ -17,14 +17,31 @@ const FontAwesomeIcon = dynamic(() => import('@fortawesome/react-fontawesome').t
 // React Hydration Error - When React tries to make an existing static HTML (rendered by server) interactive by attaching REACT components to it
 // If the HTML content rendered on the server differs from what React expects on the client side, it triggers a hydration error
 // Server generates static HTML to Client -> React takes over static HTML and "hydrates" it.
-
+// powder syrup jam toppings drinkware(straws,cups,lids) ingredients (cheesefoam powder, coffeemate, etc.), Teas, Other
 export default function Home() {
   const [inventory, setInventory] = useState([])
   const [selectedInventory, setSelected] = useState('Manhattan Inventory')
   const [isSideBarVisible, setSideBarVisible] = useState(false)
   const [search, setSearch] = useState('')
+  
   const [open, setOpen] = useState(false)
   const [showModal, setShowModal] = useState(false);
+  
+  const filterOptions = ['powder', 'syrup', 'jam', 'topping', 'tea', 'drinkware', 'ingredients', 'other'];
+  const initialFilters = filterOptions.reduce((acc, filter) => {
+    acc[filter] = false;
+    return acc;
+  }, {});
+
+  const [filters, setFilters] = useState(initialFilters);
+  
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: checked,
+    }));
+  };
 
   const updateInventory = async () => {
     const snapshot = query(collection(firestore, selectedInventory))  
@@ -117,9 +134,7 @@ export default function Home() {
       await updateDoc(itemRef, {quantity: newQuantity});  // after the item reference is located, it will update the document with the new quantity
       updateInventory(); // reupdates inventory
     }
-/*<FontAwesomeIcon icon={faX} className="restock no_restock"/> 
-  <FontAwesomeIcon icon={faX} className="restock maybe_restock" />
-*/
+
     return (
       <div className="inventory_item">
         <div className="left_inventory">
@@ -146,50 +161,53 @@ export default function Home() {
             <FontAwesomeIcon icon={faX} className="button delete_button" onClick={handleOpenModal}/>
         </div>
 
-        <ModalRemove
+      <ModalRemove
         isOpen={showModal}
         onClose={handleCloseModal}
-        selectedItem={item.name}
-        selectedInventory={selectedInventory}
-       />
+        deleteItem={item.name}
+      />
+
       </div>
     );
   };
 
-  const handleOpenModal = () => setShowModal(true)
-  const handleCloseModal = () => setShowModal(false)
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
 
-  const ModalRemove = ({isOpen, onClose, selectedItem, selectedInventory}) => {
-    const handleDelete = async (selectedItem) => {
-    const lowerCaseItem = selectedItem.lowerCaseItem().trim();
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-    const docRef = doc(collection(firestore, selectedInventory), lowerCaseItem);
-    const docSnap = await getDoc(docRef);
+  const ModalRemove = ({ isOpen, onClose, deleteItem }) => {
+    const handleDelete = async () => {
+      const lowerCaseItem = deleteItem.toLowerCase().trim();
+      const docRef = doc(collection(firestore, selectedInventory), lowerCaseItem);
+      const docSnap = await getDoc(docRef)
 
-    if (docSnap.exists()) {
-      await deleteDoc(docRef);
-      onDelete();
+      if (docSnap.exists()) {
+        await deleteDoc(docRef);
+      }
+      await updateInventory();
+      onClose();
     }
-    onClose();
-   };
 
-    if(!isOpen) return null;
+    if (!isOpen) return null;
 
     return (
       <div className="modal-overlay">
         <div className="modal-content">
-          <FontAwesomeIcon icon={faX} className="modal-close" onClick={onClose}/>
+          <FontAwesomeIcon icon={faX} className="modal-close" onClick={handleCloseModal}/>
           <h2>Are you sure you want to delete this item?</h2>
           <div className="modal-buttons">
-            <button className="button yes_delete" onClick={() => handleDelete(selectedItem)}>Yes</button>
+            <button className="button yes_delete" onClick={handleDelete}>Yes</button>
             <button className="button no_delete" onClick={onClose}>No</button>
           </div>
         </div>
       </div>
     )
-
-
   };
+
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
@@ -214,7 +232,7 @@ export default function Home() {
           <div className="modal-content">
             <FontAwesomeIcon icon={faX} className="modal-close" onClick={handleClose}/>
             <h2>Add New Item</h2>
-            <form onSubmit={handleSubmit}>
+            <form id="add-item-form" onSubmit={handleSubmit}>
               <label>
                 <input
                   type="text"
@@ -281,23 +299,23 @@ export default function Home() {
           <div id="centered_container">
             {/* Inventory Functions Container */}
             <div id="top_container">
-              <fieldset className="filters">
-                <legend>
-                  Filters:
-                </legend>
-                <div>
-                  <input type="checkbox" id="powders" name="powders"/>
-                  <label htmlFor="powders">Powders</label>
-                  <input type="checkbox" id="syrups" name="syrups"/>
-                  <label htmlFor="Syrups">Syrups</label>
-                  <input type="checkbox" id="leaves" name="leaves"/>
-                  <label htmlFor="leaves">Tea Leaves</label>
-                  <input type="checkbox" id="cups_lids" name="cups_lids"/>
-                  <label htmlFor="cups_lids">Cups and Lids</label>
-                  <input type="checkbox" id="ingredients" name="ingredients"/>
-                  <label htmlFor="ingredients">Extra Ingredients</label>
-                </div>
-              </fieldset>
+            <fieldset className="filters">
+              <legend>Filters:</legend>
+              <div>
+                {filterOptions.map((filter) => (
+                  <div key={filter}>
+                    <input
+                      type="checkbox"
+                      id={`filter_${filter}`}
+                      name={filter}
+                      checked={filters[filter]}
+                      onChange={handleCheckboxChange}
+                    />
+                    <label htmlFor={`filter_${filter}`}>{filter.charAt(0).toUpperCase() + filter.slice(1)}</label>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
 
               <div id="function_container">
               {/* Search Bar */}
@@ -321,7 +339,11 @@ export default function Home() {
               </div>
               {/* Map Through inventory and display each Item */}
               {
-                inventory.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).sort((a, b) => {
+                inventory.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).filter((item) => {
+                  console.log('Item Type:', item.type.toLowerCase());
+                  console.log('Filter Check:', filters[item.type.toLowerCase()]);
+                  return filters[item.type.toLowerCase()] || !Object.values(filters).includes(true);
+                }).sort((a, b) => {
                   if (a.type.toLowerCase() < b.type.toLowerCase()) return -1;
                   if (a.type.toLowerCase() > b.type.toLowerCase()) return 1;
                   return a.name.toLowerCase().localeCompare(b.name.toLowerCase());

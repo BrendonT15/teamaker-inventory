@@ -146,7 +146,7 @@
     padding: 1rem; /* Spacing inside the fieldset */
     border-radius: 4px; /* Slightly rounded corners */
     margin-bottom: 1rem; /* Space below the fieldset */
-    max-width: 100%;
+    width: 750px;
     overflow: hidden;
   }
 
@@ -164,11 +164,13 @@
     flex-wrap: wrap;
     max-width: 750px;
     gap: 1rem; /* Space between checkboxes */
+    justify-content: center;
+    align-content: center
   }
 
   /* Checkbox and Label Styling */
   .filters input[type="checkbox"] {
-    margin-right: 1rem; /* Space between checkbox and label */
+    margin-left: 1rem; /* Space between checkbox and label */
   }
 
   .filters label {
@@ -233,6 +235,10 @@
   display: flex;
   width: 50%;
   align-items: center;
+}
+
+.right_banner {
+  padding-right: 11.5rem;
 }
 
 .left_banner {
@@ -362,9 +368,12 @@
 }
 
 .remove_button:hover,
-.add_button:hover,
-.delete_button:hover {
+.add_button:hover{
   color: #aaa; /* Uniform hover color for all buttons */
+}
+
+.delete_button:hover {
+  color: #e63946
 }
 
 /* Quantity Input Styling */
